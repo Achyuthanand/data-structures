@@ -4,6 +4,32 @@ struct Node {
     int data;
     struct Node* next;
 };
+//recursive
+struct Node* Rinsertnode(struct Node* First,struct Node* P,int cur_pos,int insertion_point,int data)
+{
+    if(cur_pos<insertion_point-1)
+    {
+        Rinsertnode(First,P->next,cur_pos+1,insertion_point,data);
+    }
+    else
+    {
+        struct Node* t=(struct Node*)malloc(sizeof(struct Node));
+        t->data=data;
+        if(insertion_point==0)
+        {
+            t->next=First;
+            First=t;
+        }
+        else
+        {
+            t->next=P->next;
+            P->next=t;        
+            
+        }
+    }
+    return First;
+}
+//iterative
 struct Node* insertnode(struct Node* P, int data, int insertion_point)
 {
     printf("Enter element and Enter insertion point: ");
@@ -55,7 +81,8 @@ struct Node* search(struct Node* temp,int key)
 }
 //recursive
 struct Node* Rsearch(struct Node* temp,int key)
-{
+{ 
+    
     if(temp==NULL)
     {
         return NULL;
@@ -88,9 +115,14 @@ void create()
    
     last -> next = NULL;
     
-    first=insertnode(first,0,0);
+    first=insertnode(first,0,0);//iterative call
+    
+    //first=Rinsertnode(first,first,0,0,99);//recursive call
+    
     struct Node* result=search(first,0);    //iterative call
-    //struct Node* result=Rsearch(first,12);     //recursive call
+    
+    //struct Node* result=Rsearch(first,99);     //recursive call
+    
     if(result==NULL)
     {
         printf("Element is not found");
@@ -108,3 +140,6 @@ int main()
 
     return 0;
 }
+
+
+
